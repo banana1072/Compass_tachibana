@@ -70,7 +70,25 @@ class PostsController extends Controller
         return redirect()->route('post.show');
     }
     public function mainCategoryCreate(Request $request){
-        MainCategory::create(['main_category' => $request->main_category_name]);
+        /*　メインカテゴリーの中に同じカテゴリーが存在するか */
+        $BooleanMainCategory = MainCategory::where('main_category',$request->main_category_name)->exists();
+
+        if($BooleanMainCategory){/*メインカテゴリーに同じカテゴリーが存在する処理 */
+            /*メインカテゴリーidの取得*/
+            $main_category_id = MainCategory::where('main_category',$request->main_category_name)->first()->id;
+            //サブカテゴリーDBに値を追加
+            SubCategory::create(['main_category_id' => $main_category_id, 'sub_category' => $request->sub_category_name]);
+        }
+        else{/*メインカテゴリーに同じカテゴリーが存在しない処理 */
+
+            /*メインカテゴリーを追加する */
+            MainCategory::create(['main_category' => $request->main_category_name]);
+            /*メインカテゴリーのidを取得 */
+            $main_category_id = MainCategory::where('main_category',$request->main_category_name)->first()->id;
+            SubCategory::create(['main_category_id' => $main_category_id, 'sub_category' => $request->sub_category_name]);
+        }
+
+
         return redirect()->route('post.input');
     }
 
