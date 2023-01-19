@@ -11,7 +11,7 @@
       <div class="post_bottom_area d-flex">
         <div class="d-flex post_status">
           <div class="mr-5">
-            <i class="fa fa-comment"></i><span class=""></span>
+            <i class="fa fa-comment"></i><span class="">{{ $post_comment->commentCounts($post->id)->count() }}</span>
           </div>
           <div>
             @if(Auth::user()->is_Like($post->id))
@@ -36,7 +36,8 @@
       <input type="submit" name="my_posts" class="category_btn" value="自分の投稿" form="postSearchRequest">
       <ul>
         @foreach($categories as $category)
-        <li class="main_categories" category_id="{{ $category->id }}"><span>{{ $category->main_category }}<span></li>
+        <li class="main_categories" category_id="{{ $category->id }}"><span>{{ $category->main_category }}<span>
+        </li>
         @endforeach
       </ul>
     </div>
