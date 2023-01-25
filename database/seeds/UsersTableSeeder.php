@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Users\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 
 class UsersTableSeeder extends Seeder
@@ -39,7 +40,7 @@ class UsersTableSeeder extends Seeder
                 'sex' => $sex,
                 'birth_day' => '2003-01-0'.(string)($i+1),
                 'role' => $role,
-                'password' => '0'.(string)$i.'pass',
+                'password' => Hash::make('0'.(string)$i.'pass'),
                 'created_at'=>now(),
                 ]
             ]);
