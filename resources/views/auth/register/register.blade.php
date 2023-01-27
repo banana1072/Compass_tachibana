@@ -13,15 +13,6 @@
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 </head>
 <body>
-  @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
   <form action="{{ route('registerPost') }}" method="POST">
     <div class="w-100 vh-100 d-flex" style="align-items:center; justify-content:center;">
       <div class="w-25 vh-75 border p-3">
@@ -30,13 +21,20 @@
             <div class="" style="width:140px">
               <label class="d-block m-0" style="font-size:13px">姓</label>
               <div class="border-bottom border-primary" style="width:140px;">
-                <input type="text" style="width:140px;" class="border-0 over_name" name="over_name">
+                  @if($errors->first('over_name'))
+                    <span class="error_message">{{ $errors->first('over_name') }}</span>
+                  @endif
+                <input type="text" style="width:140px;" class="border-0 over_name" name="over_name" value="{{ old('over_name') }}">
               </div>
             </div>
             <div class="" style="width:140px">
               <label class=" d-block m-0" style="font-size:13px">名</label>
               <div class="border-bottom border-primary" style="width:140px;">
-                <input type="text" style="width:140px;" class="border-0 under_name" name="under_name">
+                  @if($errors->first('under_name'))
+                    <span class="error_message">{{ $errors->first('under_name') }}</span>
+                  @endif
+                <input type="text" style="width:140px;" class="border-0 under_name" name="under_name"
+                value="{{ old('under_name') }}">
               </div>
             </div>
           </div>
@@ -44,20 +42,29 @@
             <div class="" style="width:140px">
               <label class="d-block m-0" style="font-size:13px">セイ</label>
               <div class="border-bottom border-primary" style="width:140px;">
-                <input type="text" style="width:140px;" class="border-0 over_name_kana" name="over_name_kana">
+                  @if($errors->first('over_name_kana'))
+                    <span class="error_message">{{ $errors->first('under_name') }}</span>
+                  @endif
+                <input type="text" style="width:140px;" class="border-0 over_name_kana" name="over_name_kana" value="{{ old('over_name_kana') }}">
               </div>
             </div>
             <div class="" style="width:140px">
               <label class="d-block m-0" style="font-size:13px">メイ</label>
               <div class="border-bottom border-primary" style="width:140px;">
-                <input type="text" style="width:140px;" class="border-0 under_name_kana" name="under_name_kana">
+                  @if($errors->first('under_name_kana'))
+                    <span class="error_message">{{ $errors->first('under_name_kana') }}</span>
+                  @endif
+                <input type="text" style="width:140px;" class="border-0 under_name_kana" name="under_name_kana" value="{{ old('under_name_kana') }}">
               </div>
             </div>
           </div>
           <div class="mt-3">
             <label class="m-0 d-block" style="font-size:13px">メールアドレス</label>
             <div class="border-bottom border-primary">
-              <input type="mail" class="w-100 border-0 mail_address" name="mail_address">
+                  @if($errors->first('mail_address'))
+                    <span class="error_message">{{ $errors->first('mail_address') }}</span>
+                  @endif
+              <input type="mail" class="w-100 border-0 mail_address" name="mail_address" value="{{ old('mail_address') }}">
             </div>
           </div>
         </div>
@@ -70,8 +77,11 @@
           <label style="font-size:13px">その他</label>
         </div>
         <div class="mt-3">
+                  @if($errors->first('old_year'))
+                    <span class="error_message">{{ $errors->first('mail_address') }}</span>
+                  @endif
           <label class="d-block m-0 aa" style="font-size:13px">生年月日</label>
-          <select class="old_year" name="old_year">
+          <select class="old_year" name="old_year"  value="{{ old('old_year') }}">
             <option value="none">-----</option>
             <option value="1985">1985</option>
             <option value="1986">1986</option>
@@ -101,7 +111,10 @@
             <option value="2010">2010</option>
           </select>
           <label style="font-size:13px">年</label>
-          <select class="old_month" name="old_month">
+                  @if($errors->first('old_month'))
+                    <span class="error_message">{{ $errors->first('old_month') }}</span>
+                  @endif
+          <select class="old_month" name="old_month"  value="{{ old('old_month') }}">
             <option value="none">-----</option>
             <option value="01">1</option>
             <option value="02">2</option>
@@ -168,7 +181,7 @@
           <label class="d-block m-0" style="font-size:13px">選択科目</label>
           @foreach($subjects as $subject)
           <div class="">
-            <input type="checkbox" name="subject[]" value="{{ $subject->id }}">
+            <input type="checkbox" name="subject[]" value="{{ old($subject->id) }}">
             <label>{{ $subject->subject }}</label>
           </div>
           @endforeach
@@ -176,7 +189,10 @@
         <div class="mt-3">
           <label class="d-block m-0" style="font-size:13px">パスワード</label>
           <div class="border-bottom border-primary">
-            <input type="password" class="border-0 w-100 password" name="password">
+                  @if($errors->first('password'))
+                    <span class="error_message">{{ $errors->first('password') }}</span>
+                  @endif
+            <input type="password" class="border-0 w-100 password" name="password" value="{{ old('password') }}">
           </div>
         </div>
         <div class="mt-3">

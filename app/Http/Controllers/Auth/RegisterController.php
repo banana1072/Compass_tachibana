@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Http\Requests\BulletinBoard\PostFormRequest;
+
 
 use DB;
 use App\Models\Users\Subjects;
@@ -58,23 +60,8 @@ class RegisterController extends Controller
     }
 
 
-    public function registerPost(Request $request)
+    public function registerPost(PostFormRequest $request)
     {
-        $request->validate(
-            [
-                'over_name' => 'required|string|max:10',
-                'under_name' => 'required|string|max:10',
-                'over_name_kana' => 'required|string|regex:/^[ア-ン゛゜ァ-ォャ-ョー]+$/u|max:30',
-                'under_name_kana' => 'required|string|regex:/^[ア-ン゛゜ァ-ォャ-ョー]+$/u|max:30',
-                'mail_address' => 'required|email|unique:users|max:100',
-                'sex' => 'required',
-                'old_year' => 'required|numeric|min:2000',
-                'old_month' => 'required|numeric|min:1',
-                'old_day' => 'required|numeric|min:1',
-                'role' => 'required',
-                'password' => 'required|min:8|max:30|confirmed'
-            ]
-        );
         DB::beginTransaction();
         try{
             $old_year = $request->old_year;
@@ -102,7 +89,6 @@ class RegisterController extends Controller
             return view('auth.login.login');
         }catch(\Exception $e){
             DB::rollback();
-            ddd("失敗");
             return redirect()->route('loginView');
         }
     }
