@@ -69,30 +69,17 @@ class PostsController extends Controller
         Post::findOrFail($id)->delete();
         return redirect()->route('post.show');
     }
-    public function mainCategoryCreate(Request $request){
-        /*　メインカテゴリーの中に同じカテゴリーが存在するか */
-        $BooleanMainCategory = MainCategory::where('main_category',$request->main_category_name)->exists();
-
-        if($BooleanMainCategory){/*メインカテゴリーに同じカテゴリーが存在する処理 */
-            /*メインカテゴリーidの取得*/
-            $main_category_id = MainCategory::where('main_category',$request->main_category_name)->first()->id;
-            //サブカテゴリーDBに値を追加
-            SubCategory::create(['main_category_id' => $main_category_id, 'sub_category' => $request->sub_category_name]);
-        }
-        else{/*メインカテゴリーに同じカテゴリーが存在しない処理 */
-
-            /*メインカテゴリーを追加する */
-            MainCategory::create(['main_category' => $request->main_category_name]);
-            /*メインカテゴリーのidを取得 */
-            $main_category_id = MainCategory::where('main_category',$request->main_category_name)->first()->id;
-            SubCategory::create(['main_category_id' => $main_category_id, 'sub_category' => $request->sub_category_name]);
-        }
-
-
+    public function mainCategoryCreate(PostFormRequest $request){
+        MainCategory::Create(['main_category' => $request->main_category_name]);
         return redirect()->route('post.input');
     }
 
-    public function commentCreate(Request $request){
+    public function subCategoryCreate(PostFormRequest $request){
+        SubCategory::Create(['main_category_id' => $request->main_category_id, 'sub_category' => $request->sub_category_name]);
+        return redirect()->route('post.input');
+    }
+
+    public function commentCreate(PostFormRequest $request){
         PostComment::create([
             'post_id' => $request->post_id,
             'user_id' => Auth::id(),

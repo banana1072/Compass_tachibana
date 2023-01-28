@@ -36,7 +36,11 @@ class PostFormRequest extends FormRequest
             'old_month' => 'required|numeric|min:1',
             'old_day' => 'required|numeric|min:1',
             'role' => 'required',
-            'password' => 'required|min:8|max:30|confirmed'
+            'password' => 'required|min:8|max:30|confirmed',
+            'comment' =>'required|max:2500|string',
+            'main_category_name'=>'required|max:100|string|unique:main_categories,main_category',
+            'main_category_id'=>'required|exists:main_categories,id',
+            'sub_category_name'=>'required|max:100|string|unique:sub_categories,sub_category',
         ];
     }
 
