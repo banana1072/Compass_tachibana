@@ -13,7 +13,7 @@
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 </head>
 <body>
-  <form action="{{ route('registerPost') }}" method="POST">
+  <form action="{{ route('registerPost') }}" method="POST" name="register">
     <div class="w-100 vh-100 d-flex" style="align-items:center; justify-content:center;">
       <div class="w-25 vh-75 border p-3">
         <div class="register_form">

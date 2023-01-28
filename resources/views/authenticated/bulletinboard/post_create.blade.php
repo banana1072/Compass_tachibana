@@ -49,7 +49,7 @@
           <input type="submit" value="追加" class="w-100 btn btn-primary p-0" form="mainCategoryRequest">
         </form>
         <!--/////////////サブカテゴリー追加フォーム/////////////-->
-        <form action="{{ route('sub.category.create') }}" method="post" id="subCategoryRequest">{{ csrf_field() }}
+        <form action="{{ route('sub.category.create') }}" method="post" id="subCategoryRequest" name="subCategoryRequest">{{ csrf_field() }}
           <p class="m-0">サブカテゴリー</p>
           <select class="w-100" form="subCategoryRequest" name="main_category_id">
             @foreach( $main_categories as $main_category) <!-- メインカテゴリー表示 -->
