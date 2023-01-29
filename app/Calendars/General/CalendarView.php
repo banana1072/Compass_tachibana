@@ -32,20 +32,19 @@ class CalendarView{
     $html[] = '</thead>';
     $html[] = '<tbody>';
     $weeks = $this->getWeeks();
-    foreach($weeks as $week){
+    foreach($weeks as $week){ //その月の週の繰り返し
       $html[] = '<tr class="'.$week->getClassName().'">';
       $days = $week->getDays();
-      foreach($days as $day){
-        $startDay = $this->carbon->copy()->format("Y-m-01");
-        $toDay = $this->carbon->copy()->format("Y-m-d");
-
-        if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
+      foreach($days as $day){ //その月の一週間分の日付を繰り返す
+        $startDay = $this->carbon->copy()->format("Y-m-01"); //その月の最初の日
+        $toDay = $this->carbon->copy()->format("Y-m-d"); //今日の日付
+        if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){ //その月の最初の日から昨日までの場合
           $html[] = '<td class="past-day calendar-td">';
-        }else{
+        }else{ //今日からその月の最後の日までの場合
           $html[] = '<td class="calendar-td '.$day->getClassName().'">';
         }
-        $html[] = $day->render();
-        if(in_array($day->everyDay(), $day->authReserveDay())){
+        $html[] = $day->render(); //日付を記述
+        if(in_array($day->everyDay(), $day->authReserveDay())){ //予約を入れている場合
           $reservePart = $day->authReserveDate($day->everyDay())->first()->setting_part;
           if($reservePart == 1){
             $reservePart = "リモ1部";
@@ -53,19 +52,27 @@ class CalendarView{
             $reservePart = "リモ2部";
           }else if($reservePart == 3){
             $reservePart = "リモ3部";
+          } else{
+            $reservePart = "受付終了";
           }
           if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
-            $html[] = '<p class="m-auto p-0 w-75" style="font-size:12px">受付終了</p></p>';
+            //その月の初日から昨日までの時に受付終了と表記する
+            //予約を入れていた場合は受け付けた部を表示する
+            $html[] = '<p class="m-auto p-0 w-75" style="font-size:12px">'.$reservePart.'</p></p>';
             $html[] = '<input type="hidden" name="getPart[]" value="'.$reservePart.'" form="reserveParts">';
-          }else{
+          }else{ //今日からその月の最終日まで予約を入れていた場合
             $html[] = '<button type="submit" class="btn btn-danger p-0 w-75" name="delete_date" style="font-size:12px" value="'. $day->authReserveDate($day->everyDay())->first()->setting_reserve .'">'. $reservePart .'</button>';
             $html[] = '<input type="hidden" name="getPart[]" value="'.$reservePart.'" form="reserveParts">';
           }
-        }else{
+        }else{ //予約が入ってない場合
           //過去の予約は受付終了と表示する
           if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
+            //過去の分は受付終了とする
             $html[] = '<p class="m-auto p-0 w-75" style="font-size:12px">受付終了</p>';
+            $html[] = '<input type="hidden" value="" name="getPart[]" form="reserveParts">';
+
           }else{
+            //これからのものは予約フォームを設置する
               $html[] = $day->selectPart($day->everyDay());
           }
         }
@@ -79,7 +86,6 @@ class CalendarView{
     $html[] = '</div>';
     $html[] = '<form action="/reserve/calendar" method="post" id="reserveParts">'.csrf_field().'</form>';
     $html[] = '<form action="/delete/calendar" method="post" id="deleteParts">'.csrf_field().'</form>';
-
     return implode('', $html);
   }
 
