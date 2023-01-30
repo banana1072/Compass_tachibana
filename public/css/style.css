@@ -115,6 +115,23 @@ li {
     width: 60%;
 }
 
+.modal-inner-reserveDate {
+    display: inline-block;
+}
+
+.modal-inner-reservePart {
+    display: inline-block;
+}
+
+.modal-top-detail {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-top-detail span {
+    width: 30%;
+}
+
 
 /* 掲示板 */
 
