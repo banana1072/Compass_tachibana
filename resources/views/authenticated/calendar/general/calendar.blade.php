@@ -30,9 +30,10 @@
             <a class="js-modal-close btn btn-primary d-inline-block" href="">閉じる</a>
             <input type="hidden" class="edit-modal-hidden" name="post_id" value="" form="deleteParts">
             <input type="submit" class="btn btn-danger d-block" value="キャンセル" onclick="return confirm('本当にキャンセルしますか？')" form="deleteParts">
+            <input type="hidden" form="deleteParts" value="" name="deleteDate" class="submit-delete-date">
+            <input type="hidden" form="deleteParts" value="" name="deletePart" class="submit-delete-part">
           </div>
         </div>
-          {{ csrf_field() }}
       </div>
     </div>
   </div>

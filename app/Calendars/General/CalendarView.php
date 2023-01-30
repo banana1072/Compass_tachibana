@@ -61,7 +61,7 @@ class CalendarView{
             $html[] = '<p class="m-auto p-0 w-75" style="font-size:12px">'.$reservePart.'</p></p>';
             $html[] = '<input type="hidden" name="getPart[]" value="'.$reservePart.'" form="reserveParts">';
           }else{ //今日からその月の最終日まで予約を入れていた場合
-            $html[] = '<button type="submit" class="btn btn-danger p-0 w-75" name="delete_date" style="font-size:12px" value="'. $day->authReserveDate($day->everyDay())->first()->setting_reserve .'">'. $reservePart .'</button>';
+            $html[] = '<button type="submit" class="delete-btn btn btn-danger p-0 w-75" name="delete_date" style="font-size:12px" value="'. $day->authReserveDate($day->everyDay())->first()->setting_reserve .'">'. $reservePart .'</button>';
             $html[] = '<input type="hidden" name="getPart[]" value="'.$reservePart.'" form="reserveParts">';
           }
         }else{ //予約が入ってない場合

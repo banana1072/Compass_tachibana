@@ -37,8 +37,14 @@ class CalendarsController extends Controller
     }
     public function delete(Request $request){
         DB::beginTransaction();
-        try{
-            $getDelete = $request->delete_date;
+        try {
+            $deleteDate = $request->deleteDate;
+            $deletePart = $request->deletePart;
+            $delete_user = ReserveSettings::where(['setting_reserve' => $deleteDate, 'setting_part' => $deletePart])->first();
+            $delete_user_id = $delete_user->id;
+            $delete_user->increment('limit_users');
+            DB::table('reserve_setting_users')->where('user_id', Auth::id())->where('reserve_setting_id', $delete_user_id)->delete();
+            DB::commit();
         }
         catch(\Exception $e){
             DB::rollback();
