@@ -30,23 +30,28 @@ class CalendarWeekDay{
     $two_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '2')->first();
     $three_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '3')->first();
     if(!empty($one_part->id)){
-      $one_part_num = DB::table('reserve_setting_users')->where('reserve_setting_id', $one_part->id);
+      $one_part_user = DB::table('reserve_setting_users')->where('reserve_setting_id', $one_part->id);
+      $one_part_user_id = $one_part_user->pluck('user_id');
     }
     if(!empty($two_part->id)){
-      $two_part_num = DB::table('reserve_setting_users')->where('reserve_setting_id', $two_part->id);
+      $two_part_user = DB::table('reserve_setting_users')->where('reserve_setting_id', $two_part->id);
+      $two_part_user_id = $two_part_user->pluck('user_id');
+
     }
     if(!empty($three_part->id)){
-      $three_part_num = DB::table('reserve_setting_users')->where('reserve_setting_id', $three_part->id);
+      $three_part_user = DB::table('reserve_setting_users')->where('reserve_setting_id', $three_part->id);
+      $three_part_user_id = $three_part_user->pluck('user_id');
     }
+
     $html[] = '<div class="text-left">';
     if($one_part){
-      $html[] = '<p class="day_part m-0 pt-1">1部 </p>'.$one_part_num->count();
+      $html[] = '<a href="/calendar/{'.$one_part->id.'}/{'.$one_part_user_id.'}/{part?}" class="day_part m-0 pt-1">1部 </a>'.$one_part_user->count();
     }
     if($two_part){
-      $html[] = '<p class="day_part m-0 pt-1">2部</p>'.$two_part_num->count();
+      $html[] = '<a href="/calendar/{'.$two_part->id.'}/{'.$two_part_user_id.'}/{part?}" class="day_part m-0 pt-1">2部</a>'.$two_part_user->count();
     }
     if($three_part){
-      $html[] = '<p class="day_part m-0 pt-1">3部</p>'.$three_part_num->count();
+      $html[] = '<a href="/calendar/{'.$three_part->id.'}/{}/{part?}" class="day_part m-0 pt-1">3部</a>'.$three_part_user->count();
     }
     $html[] = '</div>';
 
