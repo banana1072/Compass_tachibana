@@ -10,9 +10,11 @@
           <th class="w-25">ID</th>
           <th class="w-25">名前</th>
         </tr>
+        {{-- @foreach($user_id as $id) --}}
         <tr class="text-center">
+          {{-- <td class="w-25">{{ $id }}</td> --}}
           <td class="w-25"></td>
-          <td class="w-25"></td>
+        {{-- @endforeach --}}
         </tr>
       </table>
     </div>

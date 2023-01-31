@@ -21,14 +21,21 @@ li {
 /* サイドバー */
 
 .sidebar {
-    width: 150px;
+    width: 180px;
     height: 100vh;
+    padding-top: 30px;
     background-color: #03AAD2;
     font-weight: bold;
+    position: fixed;
 }
 
 .main-container {
     width: 100%;
+    padding-left: 180px;
+}
+
+.sidebar a {
+    padding-left: 10px;
 }
 
 .sidebar p a {
@@ -312,4 +319,20 @@ li {
 
 .subject_inner {
     display: none;
+}
+
+.text-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-left a {
+    display: inline-block;
+    margin-right: 20px!important;
+    color: #04A9D2;
+}
+
+.post_area {
+    margin: 0 auto;
+    margin-top: 30px!important;
 }
