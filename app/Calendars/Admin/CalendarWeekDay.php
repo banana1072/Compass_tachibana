@@ -45,13 +45,13 @@ class CalendarWeekDay{
 
     $html[] = '<div class="text-left">';
     if($one_part){
-      $html[] = '<a href="/calendar/{'.$one_part->id.'}/{'.$one_part_user_id.'}/{part?}" class="day_part m-0 pt-1">1部 </a>'.$one_part_user->count();
+      $html[] = '<a href="/calendar/{'.$one_part_user_id.'}/{'.$one_part->setting_reserve.'}/{1}" class="day_part m-0 pt-1">1部 </a>'.$one_part_user->count();
     }
     if($two_part){
-      $html[] = '<a href="/calendar/{'.$two_part->id.'}/{'.$two_part_user_id.'}/{part?}" class="day_part m-0 pt-1">2部</a>'.$two_part_user->count();
+      $html[] = '<a href="/calendar/{'.$two_part_user_id.'}/{'.$two_part->setting_reserve.'}/{2}" class="day_part m-0 pt-1">2部</a>'.$two_part_user->count();
     }
     if($three_part){
-      $html[] = '<a href="/calendar/{'.$three_part->id.'}/{}/{part?}" class="day_part m-0 pt-1">3部</a>'.$three_part_user->count();
+      $html[] = '<a href="/calendar/{'.$three_part_user_id.'}/{'.$three_part->setting_reserve.'}/{3}" class="day_part m-0 pt-1">3部</a>'.$three_part_user->count();
     }
     $html[] = '</div>';
 
