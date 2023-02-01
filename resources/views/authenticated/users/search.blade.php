@@ -1,11 +1,11 @@
 @extends('layouts.sidebar')
 
 @section('content')
-<p>ユーザー検索</p>
+<p class="search_head">ユーザー検索</p>
 <div class="search_content w-100 border d-flex">
   <div class="reserve_users_area">
     @foreach($users as $user)
-    <div class="border one_person">
+    <div class="border one_person m-1 p-2">
       <div>
         <span>ID : </span><span>{{ $user->id }}</span>
       </div>
@@ -88,9 +88,10 @@
           </div>
           <div class="selected_engineer">
             <label>選択科目</label>
-            <input type="checkbox" name="subject[]" form="userSearchRequest" value="国語">国語
-            <input type="checkbox" name="subject[]" form="userSearchRequest" value="数学">数学
-            <input type="checkbox" name="subject[]" form="userSearchRequest" value="英語">英語
+            <div class="subject_contents">
+              <div><input type="checkbox" name="subject[]" form="userSearchRequest" value="国語">国語</div>
+              <div><input type="checkbox" name="subject[]" form="userSearchRequest" value="数学">数学</div>
+              <div><input type="checkbox" name="subject[]" form="userSearchRequest" value="英語">英語</div>
           </div>
         </div>
       </div>
