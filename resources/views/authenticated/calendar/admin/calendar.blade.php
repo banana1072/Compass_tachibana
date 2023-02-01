@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="w-75 m-auto">
-  <div class="w-100">
+  <div class="w-100 mt-5">
     <p>{{ $calendar->getTitle() }}</p>
     <p>{!! $calendar->render() !!}</p>
   </div>
