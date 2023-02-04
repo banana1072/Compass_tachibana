@@ -25,6 +25,7 @@
             <div>
                 <span>時間：</span><p class="modal-inner-reservePart"></p>
             </div>
+            <p>上記の予約をキャンセルしてもよろしいですか？</p>
           </div>
           <div class="w-50 m-auto edit-modal-btn d-flex">
             <a class="js-modal-close btn btn-primary d-inline-block" href="">閉じる</a>
