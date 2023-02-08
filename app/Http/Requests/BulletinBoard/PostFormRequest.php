@@ -5,6 +5,7 @@ namespace App\Http\Requests\BulletinBoard;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
+//テストgit
 class PostFormRequest extends FormRequest
 {
     /**
@@ -15,7 +16,7 @@ class PostFormRequest extends FormRequest
     public function authorize()
     {
         return true;
-        
+
     }
 
     /**
