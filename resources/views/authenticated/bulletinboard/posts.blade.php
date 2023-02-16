@@ -38,6 +38,13 @@
         @foreach($categories as $category)
         <li class="main_categories" category_id="{{ $category->id }}">
           <span>{{ $category->main_category }}<span>
+            <ul>
+              @foreach($subCategory->where('main_category_id',$category->id) as $subcategory)
+              <li>
+                <input type="submit" class="category_btn" name="category_word" value="{{ $subcategory['sub_category'] }}" form="postSearchRequest">
+              </li>
+              @endforeach
+            </ul>
         </li>
         @endforeach
       </ul>

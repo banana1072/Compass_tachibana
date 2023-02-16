@@ -17,19 +17,22 @@ class SelectNameDetails implements DisplayUsers{
     }else{
       $role = array($role);
     }
+    if(is_null($subjects)){
+      $subjects = ['国語', '数学', '英語'];
+    }
     $users = User::with('subjects')
-    ->where(function($q) use ($keyword){
-      $q->Where('over_name', 'like', '%'.$keyword.'%')
-      ->orWhere('under_name', 'like', '%'.$keyword.'%')
-      ->orWhere('over_name_kana', 'like', '%'.$keyword.'%')
-      ->orWhere('under_name_kana', 'like', '%'.$keyword.'%');
-    })
-    ->where(function($q) use ($role, $gender){
-      $q->whereIn('sex', $gender)
-      ->whereIn('role', $role);
-    })
-    ->whereHas('subjects', function($q) use ($subjects){
-      $q->whereIn('subjects.subject', $subjects);
+      ->where(function ($q) use ($keyword) {
+        $q->Where('over_name', 'like', '%' . $keyword . '%')
+          ->orWhere('under_name', 'like', '%' . $keyword . '%')
+          ->orWhere('over_name_kana', 'like', '%' . $keyword . '%')
+          ->orWhere('under_name_kana', 'like', '%' . $keyword . '%');
+      })
+      ->where(function ($q) use ($role, $gender) {
+        $q->whereIn('sex', $gender)
+          ->whereIn('role', $role);
+      })
+      ->whereHas('subjects', function ($q) use ($subjects) {
+        $q->whereIn('subject', $subjects);
     })
     ->orderBy('over_name_kana', $updown)->get();
     return $users;

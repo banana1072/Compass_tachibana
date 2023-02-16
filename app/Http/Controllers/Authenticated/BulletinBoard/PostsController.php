@@ -22,6 +22,7 @@ class PostsController extends Controller
     public function show(Request $request){
         $posts = Post::with('user', 'postComments')->get();
         $categories = MainCategory::get();
+        $subCategory = SubCategory::get();
         $likes = new Like;
         $post_comment = new Post;
         if(!empty($request->keyword)){
@@ -39,7 +40,7 @@ class PostsController extends Controller
             $posts = Post::with('user', 'postComments')
             ->where('user_id', Auth::id())->get();
         }
-        return view('authenticated.bulletinboard.posts', compact('posts', 'categories', 'likes', 'post_comment'));
+        return view('authenticated.bulletinboard.posts', compact('posts', 'categories', 'likes', 'post_comment','subCategory'));
     }
 
     public function postDetail($post_id){
