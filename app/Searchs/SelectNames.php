@@ -29,10 +29,10 @@ class SelectNames implements DisplayUsers{
       })
       ->whereIn('sex', $gender)
       ->whereIn('role', $role)
-      ->whereHas('subjects', function ($q) use ($subjects) {
-        $q->whereIn('subject', $subjects);
+      ->whereIn('subjects', function ($q) use ($subjects) {
+        $q->whereIn('subjects.subject', $subjects);
     })
-    ->orderBy('over_name_kana', $updown)->get();
+      ->orderBy('over_name_kana', $updown)->get();
 
     return $users;
   }

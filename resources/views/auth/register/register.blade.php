@@ -77,8 +77,8 @@
           <label style="font-size:13px">その他</label>
         </div>
         <div class="mt-3">
-                  @if($errors->first('old_year'))
-                    <span class="error_message">{{ $errors->first('mail_address') }}</span>
+                  @if($errors->first('datetime'))
+                    <span class="error_message">{{ $errors->first('datetime') }}</span>
                   @endif
           <label class="d-block m-0 aa" style="font-size:13px">生年月日</label>
           <select class="old_year" name="old_year"  value="{{ old('old_year') }}">
@@ -111,9 +111,6 @@
             <option value="2010">2010</option>
           </select>
           <label style="font-size:13px">年</label>
-                  @if($errors->first('old_month'))
-                    <span class="error_message">{{ $errors->first('old_month') }}</span>
-                  @endif
           <select class="old_month" name="old_month"  value="{{ old('old_month') }}">
             <option value="none">-----</option>
             <option value="01">1</option>

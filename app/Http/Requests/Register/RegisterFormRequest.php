@@ -21,8 +21,16 @@ class RegisterFormRequest extends FormRequest
      *
      * @return array
      */
+
+
     public function rules()
     {
+        $old_year = $this->input('old_year');
+        $old_month = $this->input('old_month');
+        $old_day = $this->input('old_day');
+        $datetime = $old_year . '-' . $old_month . '-' . $old_day;
+        $this->merge(['datetime' => $datetime]);
+
         return [
             //
             'over_name'       => 'required|string|max:10',
@@ -31,9 +39,7 @@ class RegisterFormRequest extends FormRequest
             'under_name_kana' => 'required|string|regex:/^[ア-ン゛゜ァ-ォャ-ョー]+$/u|max:30',
             'mail_address'    => 'required|email|unique:users|max:100',
             'sex'             => 'required',
-            'old_year'        => 'required|numeric|min:2000',
-            'old_month'       => 'required|numeric|min:1',
-            'old_day'         => 'required|numeric|min:1',
+            'datetime' => 'required|after_or_equal:2000-01-01|before_or_equal:'.date('Y-m-d'),
             'role'            => 'required',
             'password'        => 'required|min:8|max:30|confirmed',
         ];
