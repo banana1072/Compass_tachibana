@@ -22,14 +22,23 @@ class RegisterFormRequest extends FormRequest
      * @return array
      */
 
-
-    public function rules()
-    {
+    public function getValidatorInstance(){
         $old_year = $this->input('old_year');
         $old_month = $this->input('old_month');
         $old_day = $this->input('old_day');
         $datetime = $old_year . '-' . $old_month . '-' . $old_day;
         $this->merge(['datetime' => $datetime]);
+
+        return parent::getValidatorInstance();
+    }
+
+    public function rules()
+    {
+        // $old_year = $this->input('old_year');
+        // $old_month = $this->input('old_month');
+        // $old_day = $this->input('old_day');
+        // $datetime = $old_year . '-' . $old_month . '-' . $old_day;
+        // $this->merge(['datetime' => $datetime]);
 
         return [
             //
