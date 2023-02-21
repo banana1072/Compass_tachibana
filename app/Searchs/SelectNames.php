@@ -19,7 +19,6 @@ class SelectNames implements DisplayUsers{
     if(empty($subjects)){
       $subjects = ['国語', '数学', '英語'];
     }
-
     $users = User::with('subjects')
       ->where(function ($q) use ($keyword) {
         $q->where('over_name', 'like', '%' . $keyword . '%')
@@ -29,8 +28,8 @@ class SelectNames implements DisplayUsers{
       })
       ->whereIn('sex', $gender)
       ->whereIn('role', $role)
-      ->whereIn('subjects', function ($q) use ($subjects) {
-        $q->whereIn('subjects.subject', $subjects);
+      ->whereHas('subjects', function ($q) use ($subjects) {
+        $q->whereIn('subject', $subjects);
     })
       ->orderBy('over_name_kana', $updown)->get();
 

@@ -25,14 +25,19 @@ class SelectIds implements DisplayUsers{
       $users = User::with('subjects')
       ->whereIn('sex', $gender)
       ->whereIn('role', $role)
-      ->whereIn('subjects',$subjects)
+      ->whereHas('subjects', function ($q) use ($subjects) {
+        $q->whereIn('subject', $subjects);
+    })
+
       ->orderBy('id', $updown)->get();
     }else{
       $users = User::with('subjects')
         ->where('id', $keyword)
         ->whereIn('sex', $gender)
         ->whereIn('role', $role)
-        ->whereIn('subjects',$subjects)
+        ->whereHas('subjects', function ($q) use ($subjects) {
+          $q->whereIn('subject', $subjects);
+        })
         ->orderBy('id', $updown)->get();
     }
 
