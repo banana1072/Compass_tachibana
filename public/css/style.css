@@ -380,5 +380,15 @@ A .main_categories span,
     margin-right: 3px;
 }
 
+.post_status .sub_category {
+    display: inline-block;
+    margin-right: 10px;
+    background-color: gray;
+    color: white;
+    border-radius: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
 
 /*# sourceMappingURL=style.css.map */

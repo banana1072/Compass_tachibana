@@ -20,7 +20,7 @@ use Auth;
 class PostsController extends Controller
 {
     public function show(Request $request){
-        $posts = Post::with('user', 'postComments')->get();
+        $posts = Post::with('user', 'postComments','subCategories')->get();
         $categories = MainCategory::get();
         $subCategory = SubCategory::get();
         $likes = new Like;
@@ -29,14 +29,22 @@ class PostsController extends Controller
             $posts = Post::with('user', 'postComments')
             ->where('post_title', 'like', '%'.$request->keyword.'%')
             ->orWhere('post', 'like', '%'.$request->keyword.'%')->get();
-        }else if($request->category_word){
+        }else if(!empty($request->category_word)){
             $sub_category = $request->category_word;
-            $posts = Post::with('user', 'postComments')->get();
-        }else if($request->like_posts){
+            $posts = Post::with('user', 'postComments', 'subCategories')->whereHas('subCategories', function ($q) use ($sub_category) {
+                $q->where('sub_category', $sub_category);
+            });
+            if($posts->exists()){
+                $posts = $posts->get();
+            }else{
+                $posts = collect();
+            };
+        }else if(!empty($request->like_posts)){
             $likes = Auth::user()->likePostId()->get('like_post_id');
             $posts = Post::with('user', 'postComments')
             ->whereIn('id', $likes)->get();
-        }else if($request->my_posts){
+            $likes = new Like;
+        }else if(!empty($request->my_posts)){
             $posts = Post::with('user', 'postComments')
             ->where('user_id', Auth::id())->get();
         }
@@ -59,7 +67,7 @@ class PostsController extends Controller
             'post_title' => $request->post_title,
             'post' => $request->post_body
         ]);
-        
+        $post->subCategories()->attach($request->post_category_id);
         return redirect()->route('post.show');
     }
 

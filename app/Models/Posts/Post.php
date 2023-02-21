@@ -13,6 +13,8 @@ class Post extends Model
         'user_id',
         'post_title',
         'post',
+        'post_sub_categories',
+        'sub_category_id',
     ];
 
     public function user(){
@@ -24,7 +26,7 @@ class Post extends Model
     }
 
     public function subCategories(){
-        return $this->hasOne('App\Models\Categories\SubCategory');
+        return $this->belongsToMany('App\Models\Categories\SubCategory','post_sub_categories','post_id','sub_category_id');
         // リレーションの定義
     }
 
@@ -32,4 +34,9 @@ class Post extends Model
     public function commentCounts($post_id){
         return Post::with('postComments')->find($post_id)->postComments();
     }
+    public function likeCounts($post_id){
+        return Like::where('like_post_id', $post_id)->get()->count();
+    }
+
+
 }

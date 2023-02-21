@@ -4,12 +4,20 @@
 <div class="board_area w-100 border m-auto d-flex">
   <div class="post_view w-75 mt-5">
     <p class="w-75 m-auto">投稿一覧</p>
+    @if($posts->isNotEmpty())
     @foreach($posts as $post)
     <div class="post_area border w-75  p-3">
       <p><span>{{ $post->user->over_name }}</span><span class="ml-3">{{ $post->user->under_name }}</span>さん</p>
       <p><a href="{{ route('post.detail', ['id' => $post->id]) }}">{{ $post->post_title }}</a></p>
       <div class="post_bottom_area d-flex">
         <div class="d-flex post_status">
+          <div class="sub_category">
+            <i class="post_sub_category">
+               @foreach($post->subCategories as $subCategory)
+                {{ $subCategory->sub_category }}
+                @endforeach
+              </i>
+          </div>
           <div class="mr-5">
             <i class="fa fa-comment"></i><span class="pl-2">{{ $post_comment->commentCounts($post->id)->count() }}</span>
           </div>
@@ -24,7 +32,9 @@
       </div>
     </div>
     @endforeach
+    @endif
   </div>
+
   <div class="other_area border w-25">
     <div class="border m-4">
       <div class=""><a href="{{ route('post.input') }}">投稿</a></div>
@@ -35,15 +45,24 @@
       <input type="submit" name="like_posts" class="category_btn" value="いいねした投稿" form="postSearchRequest">
       <input type="submit" name="my_posts" class="category_btn" value="自分の投稿" form="postSearchRequest">
       <ul>
+
         @foreach($categories as $category)
         <li class="main_categories" category_id="{{ $category->id }}">
           <span>{{ $category->main_category }}<span>
             <ul>
+              @if(is_a($subCategory,$posts::class))
               @foreach($subCategory->where('main_category_id',$category->id) as $subcategory)
               <li>
                 <input type="submit" class="category_btn" name="category_word" value="{{ $subcategory['sub_category'] }}" form="postSearchRequest">
               </li>
               @endforeach
+              @else
+              @foreach($subCategory->where('main_category_id',$category->id)->get() as $subcategory)
+              <li>
+                <input type="submit" class="category_btn" name="category_word" value="{{ $subcategory['sub_category'] }}" form="postSearchRequest">
+              </li>
+              @endforeach
+              @endif
             </ul>
         </li>
         @endforeach
